@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>几个注意点</title>
+
+    <script src = "../../lib/vue.js"></script>
+</head>
+<body>
+
+<!-- 
+    几个注意点：
+        1. 关于组件名：
+            一个单词组成：
+                第一种写法(首字母小写): school
+                第二种写法(首字母大写): School
+            多个单词组成：
+                第一种写法(kebab-case命名): my-school
+                第二种写法(CamelCase命名)：MySchool (需要Vue脚手架支持)
+
+            备注：
+                (1) 组件名尽可能回避HTML中已有的元素名称,例如: h2、H2都不行
+                (2) 可以使用name 配置项指定组件在开发者工具中呈现的名字
+
+
+        2. 关于组件标签：
+            第一种写法： <school></school>
+            第二种写法：<school/>
+            备注： 不要使用脚手架时， <school/>会导致后续组件不能渲染
+
+        3. 一个简写方式：
+            const school = Vue.extend(options)  可简写为： const school = options
+-->
+
+
+    <div id = "demo">
+        <hello></hello>
+        <h2>{{msg}}</h2>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const hel = Vue.extend({
+            name: "Vue-exercise",
+            template: 
+                `
+                    <div>
+                        <h2>{{content}}</h2>
+                    </div>
+                `,
+            data(){
+                return{
+                    content: "Hello, welcome to china"
+                }
+            }
+        })
+
+        new Vue({
+            el: "#demo",
+            data: {
+                msg: "hahah"
+            },
+            components: {
+                hello: hel
+            }
+        })
+
+
+    </script>
+    
+</body>
+</html>

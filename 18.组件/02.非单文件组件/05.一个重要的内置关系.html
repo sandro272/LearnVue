@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src = "../../lib/vue.js"></script>
+</head>
+<body>
+
+<!--     
+    1. 一个重要的内置关系： VueComponent.prototype.__proto__ === Vue.prototype
+    2. 为什么要有这个关系：让组件实例化对象(vc)可以访问到 Vue原型上的属性、方法
+
+    总结： 组件实例化对象是一个小型的vm，它没有vm的el配置项，数据data要写成函数形式，而不是对象形式
+ -->
+
+
+    <div id = "demo">
+        <school></school>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;                     // 阻止 vue 在启动时生成生产提示
+        Vue.prototype.x = 99;
+
+        const school = Vue.extend({
+            template: `
+                <div>
+                    <h2>名称：{{name}}</h2>
+                    <h2>地址：{{address}}</h2>
+                    <button @click = "showX">点我</button>
+                </div>
+            `,
+            data(){
+                return {
+                    name: "YNU",
+                    address: "KM"
+                }
+            },
+            methods: {
+                showX(){
+                    console.log(this.x)
+                }
+            },
+        })
+
+
+        const vm = new Vue({
+            el: "#demo",
+            components: {
+                school
+            }
+        })
+
+        
+
+        // console.log(school.prototype.__proto__ === Vue.prototype)                     // true   实例的隐士原型属性永远指向自己缔造者的原型对象
+
+
+
+        /*
+
+        // 定义一个构造函数
+        function Demo(){
+            this.a = 1
+            this.b = 2
+        }
+
+        // 创建一个demo的实例对象
+        const d = new Demo()
+
+        console.log(Demo.prototype)                      // 显示原型对象
+        console.log(d.__proto__)                         // 隐士原型对象                   显示原型对象和隐士原型对象 都指向一个原型对象     
+
+        // console.log(Demo.prototype === d.__proto__)                  // true
+
+        // 程序员通过显示原型属性操作原型对象，追加一个x属性，值为99
+        Demo.prototype.x = 99
+        // console.log(d.__proto__.x)      
+        console.log("d.x:", d.x)
+
+        console.log("@:", d)
+
+        // function Person(){}
+        // function Animal(){}
+
+        // const p = new Person()
+        // const a = new Animal()
+
+        // console.log("P:", p)
+        // console.log("a:", a)
+
+
+        */
+
+    </script>
+    
+</body>
+</html>

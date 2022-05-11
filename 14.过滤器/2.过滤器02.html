@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+
+    <script src = "../lib/dayjs.min.js"></script>
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+
+    <div id = "demo">
+        <h2>显示格式化后的日期</h2>
+        <!-- <h3>{{time}}</h3> -->
+        <h3>{{transMatterInfo}}</h3>
+
+        <!-- 此处transMatterInfo是computed、methods，则会报错 -->
+        <h3>{{time | transMatterInfo | mySlice}}</h3>               
+
+    </div>
+
+
+
+    <div id = "demo01">
+        <h3>{{msg}}</h3>
+        <h3>{{msg | mySlice}}</h3>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        // 全局过滤器
+        Vue.filter('mySlice', function(value){
+            return value.slice(0, 4)
+        })
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                time: 1643072224086
+            },
+            filters: {
+                transMatterInfo(){
+                    return dayjs(this.time).format('YYYY年MM月DD日 HH:mm:ss')
+                }
+            }
+        });
+
+
+        const vm01 = new Vue({
+            el: "#demo01",
+            data: {
+                msg: "I'm glad to know that you come to my city at the summer vacation. "
+            }
+        })
+
+
+    </script>
+    
+</body>
+</html>

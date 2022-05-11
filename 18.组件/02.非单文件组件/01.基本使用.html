@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+
+            <script src = "../../lib/vue.js"></script>
+        </head>
+        <body>
+
+
+<!-- 
+            Vue中使用组件的三大步骤：
+                一、定义组件(创建组件)
+                二、注册组件
+                三、使用组件(写组件标签)
+
+            一、如何定义一个组件
+                使用Vue.extend(options)创建，其中options和new Vue(options)时传入的那个options几乎一样，但也有点区别：
+                    区别如下：
+                        1. el不要写，为什么？  ==> 最终所有的组件都要经过一个vm的管理，由vm中的el决定服务于哪个容器
+                        2. data必须写成函数， 为什么？ ==> 避免组件被复用时，数据存在引用关系
+                    备注： 使用template可以配置组件结构
+        
+            二、如何注册组件：
+                1. 局部组件： 靠new Vue的时候传入components选项
+                2. 全局组件： 靠Vue.component('组件名', 组件)
+
+            三、编写组件标签
+                <school></school> 
+-->
+
+
+
+            <div id = 'demo'>
+                <!-- <h2>学校名称：{{schoolName}}</h2>
+                <h2>学校地址：{{address}}</h2> -->
+                <h2>{{msg}}</h2>
+                <hello></hello>
+
+                <hr>
+
+                <!-- 第三步： 使用组件 -->
+                <school></school>
+
+                <hr>
+
+                <!-- <h2>学生名称：{{studentName}}</h2>
+                <h2>学生成绩：{{score}}</h2> -->
+
+                <!-- 第三步：使用组件 -->
+                <student></student>
+
+            </div>
+
+
+            <div id = "demo01">
+                <hello></hello>
+            </div>
+            
+        </body>
+
+        <script>
+            Vue.config.productionTip = false;
+
+
+            // 第一步：创建school组件
+            const school = Vue.extend({
+                // 组件定义时，一定不要写el配置项，因为最终所有的组件都要被一个vm管理，由vm决定服务于哪个容器
+                template:
+                     `
+                        <div>
+                            <h2>学校名称：{{schoolName}}</h2>
+                            <h2>学校地址：{{address}}</h2>
+                            <button @click = "showName">点我提示学校信息</button>
+                        </div>
+                    `,
+                data() {
+                    return {
+                        schoolName: "YNU",
+                        address: "KM"
+                    }
+                },
+                methods: {
+                    showName(){
+                        alert("school")
+                    }
+                },
+            })
+
+
+            // 第一步： 创建student组件
+            const student = Vue.extend({
+                template: `
+                    <div>
+                        <h2>学生姓名：{{studentName}}</h2>
+                        <h2>学生成绩：{{score}}</h2>
+                    </div>
+                `,
+                data() {
+                    return {
+                        studentName: "张黄",
+                        score: 89
+                    }
+                }
+            })
+
+
+            // 第一步创建hello组件
+            const hello = Vue.extend({
+                template:
+                    `
+                        <div>
+                            <h2>{{content}}</h2>
+                        </div>
+                    `,
+                data(){
+                    return {
+                        content: "Happy New Year"
+                    }
+                }
+            })
+
+
+            // 全局注册组件
+            Vue.component('hello', hello)
+
+
+            // 创建vm
+            const vm = new Vue({
+                el: "#demo",
+                data: {
+                    msg: "Hello"
+                },
+                // data: {
+                //     schoolName: "YNU",
+                //     address: "km",
+                //     studentName: "张黄",
+                //     score: 89 
+                // }
+
+                // 第二步：  创建组件(局部组件)
+                components: {
+                    school: school,                   // 标签名: 组件名
+                    student: student
+                }
+            })
+
+
+            // let data = {
+            //     a: 1,
+            //     b: 2
+            // }
+
+            // function data(){
+            //     return {a: 1, b: 2}
+            // }
+
+            // const x1 = data()
+            // const x2 = data()
+
+
+            const vm01 = new Vue({
+                el: "#demo01"
+            })
+
+        
+        </script>
+</html>

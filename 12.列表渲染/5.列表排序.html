@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表排序</title>
+
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+
+    <div id = "demo">
+        <h2>人员名单</h2>
+        <input type = "text" placeholder="请输入名字" v-model="keyWords">
+        <button @click = "sortType = 0">原序</button>
+        <button @click = "sortType = 2">升序</button>
+        <button @click = "sortType = 1">降序</button>
+        <ul>
+            <!-- 如果没有效果注意此处 -->
+            <li v-for = "p of filterPerson" :key = "p.id">    
+                {{p.name}} -- {{p.age}} -- {{p.gender}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                info_p: [
+                    {id: "1001", name: "马冬梅", age: 18, gender: "female"},
+                    {id: "1002", name: "周冬雨", age: 25, gender: "female"},
+                    {id: "1003", name: "周杰伦", age: 20, gender: "male"},
+                    {id: "1004", name: "温兆伦", age: 21, gender: "male"}
+                ],
+                keyWords: "",
+                sortType: 0                // 0代表原序, 1代表降序, 2代表升序
+            },
+            computed:{
+                filterPerson(){
+                    const arr = this.info_p.filter((arg) => {
+                        return arg.name.indexOf(this.keyWords) !== -1; 
+                    });
+
+                    // 判断一下是否需要进行排序
+                    if(this.sortType){
+                        arr.sort((a, b) => {
+                            return this.sortType === 1 ? (b.age - a.age) : (a.age - b.age) 
+                        })
+                    };
+                    return arr
+                }
+
+
+            }
+
+           
+        })
+        // let arr = [5, 4, 1, 8, 9, 11, 3]
+        // arr.sort((a, b) => {
+        //     return b-a                                    // a-b是升序， b-a是降序
+        // })
+        // console.log(arr)
+    </script>
+    
+</body>
+</html>
