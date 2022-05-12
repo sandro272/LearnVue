@@ -1,0 +1,1 @@
+先写School.vue 和 Student.vue组件     --->        写App.vue组件                --->            写main.js组件(入口文件)                --->                  最后写index.html

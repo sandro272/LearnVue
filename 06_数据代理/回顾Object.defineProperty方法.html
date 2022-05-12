@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回顾Object.defineproperty</title>
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+    
+
+    <script>
+        Vue.config.productionTip = false;
+
+        let person = {
+            name: "Ricky",
+            sex: "male",
+            // age: 18
+        };
+
+        Object.defineProperty(person, 'age', {
+            value: 18,
+            enumerable: true,                             // 控制属性是否可以枚举，默认为false
+            writable: true,                               // 控制属性是否可以被修改， 默认为false
+            configurable: true                            // 控制属性是否可以被删除， 默认为false
+        });
+
+
+        // console.log(Object.keys(person))                       // 循环遍历对象中的属性，并以数组形式循环输出元素
+    </script>
+    
+</body>
+</html>

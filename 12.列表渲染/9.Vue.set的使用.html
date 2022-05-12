@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.set的使用</title>
+
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+
+    <div id = "demo">
+        <h1>学校信息</h1>
+        <h2>名称：{{name}}</h2>
+        <h2>地址：{{address}}</h2>
+        <!-- <h2>院校属性：{{}}</h2> -->
+
+        <h1>班级信息</h1>
+        <button @click = "addSex">添加性别，默认男</button>
+        <h2 v-if = "cla.students.sex">性别：{{cla.students.sex}}</h2>
+
+        <h2>年级：{{cla.grade}}</h2>
+        <h3>姓名：{{cla.students.name}}</h3>
+        <h3>姓名：{{cla.students.hobby}}</h3>
+        <ul>
+            <li v-for = "(a,index) of academy" :key = "index">
+                {{a.name}} -- {{a.address}}
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                name: "YNU",
+                address: "KM",
+                cla: {
+                    name: "computer_science",
+                    grade: "大一",
+                    students: {
+                        name: "Ethan",
+                        age: 22,
+                        hobby: "football" 
+                    }
+
+                },
+                academy: [
+                    {name: "信息学院", address: "呈贡校区"},
+                    {name: "新闻学院", address: "呈贡校区"}
+                ]
+            },
+            methods: {
+                addSex(){
+                    // Vue.set(this.cla.students, "sex", "男")
+                    vm.$set(this.cla.students, "sex", "男")
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>

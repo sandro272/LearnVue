@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本列表</title>
+
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+
+<!-- 
+    v-for指令：
+        1. 用于展示列表数据
+        2. 语法： v-for = "(item, index) in xxx" :key= "yyy"
+        3. 可遍历： 数组、对象、字符串（用的很少）、指定次数（用的很少）
+         -->
+
+    <div id = "demo">
+        <!-- 遍历数组 -->
+        <h2>人员列表（遍历数组）</h2>
+        <ul>
+            <li v-for = "(person, index) of persons_info" :key = "index">
+                {{person.name}} --- {{person.age}}
+            </li>
+        </ul>
+
+        <br>
+
+        <!-- 遍历对象 -->
+        <h2>汽车信息（遍历对象）</h2>
+        <ul>
+            <li v-for = "(value,k) of car_info" :key = "k">
+                {{k}} -- {{value}}
+            </li>
+        </ul>
+
+        <!-- 遍历字符串 -->
+        <h2>遍历字符串</h2>
+        <ul>
+            <li v-for="(value, index) of str" :key = "index">
+                {{index}} --- {{value}}
+            </li>
+        </ul>
+
+        <!-- 遍历指定次数 -->
+        <h2>测试遍历指定次数</h2>
+        <ul>
+            <li v-for = "(number, index) of 5" :key = "index">
+                {{index}} -- {{number}}
+            </li>
+        </ul>
+
+        <script>
+            Vue.config.productionTip = false;
+
+            const vm = new Vue({
+                el: "#demo",
+                data: {
+                    persons_info: [
+                        {id: "001", name: "张三", age: 18},
+                        {id: "002", name: "李四", age: 19},
+                        {id: "003", name: "王麻子", age: 20}
+                    ],
+                    car_info: {
+                        name: "保时捷911",
+                        price: "160万",
+                        color: "gray"
+                    },
+                    str: "hello"
+                }
+
+            })
+        </script>
+
+
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新时的一个问题</title>
+
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+    
+
+    <div id = "demo">
+        <h2>人员列表</h2>
+        <button @click = "updateMDM">更新马冬梅</button>
+        <ul>
+            <li v-for = "p of info_p" :key="p.id">
+                {{p.name}} -- {{p.age}} -- {{p.gender}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                info_p: [
+                    {id: "1001", name: "马冬梅", age: 18, gender: "female"},
+                    {id: "1002", name: "周冬雨", age: 25, gender: "female"},
+                    {id: "1003", name: "周杰伦", age: 20, gender: "male"},
+                    {id: "1004", name: "温兆伦", age: 21, gender: "male"}
+                ]
+            },
+            methods: {
+                updateMDM(){
+                    // this.info_p[0].name = "马老师";
+                    // this.info_p[0].age = 57;
+                    // this.info_p[0].gender = "male"
+                    this.info_p[0] = {id: "1001", name: "马老师", age: 57, gender: "male"}
+                }
+
+
+                
+            },
+        })
+    </script>
+</body>
+</html>

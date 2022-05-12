@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件修饰符</title>
+
+    <script src = "../lib/vue.js"></script>
+
+    <style>
+        *{
+            margin-top: 8px;
+        }
+
+        .box01 {
+            background-color: darkgoldenrod;
+            width: 200px;
+        }
+
+        .box02 {
+            background-color: darkgrey;
+            width: 200px;
+        }
+        ul{
+            width: 100px;
+            height: 100px;
+            background-color: cyan;
+            overflow: auto;
+        }
+        li {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Vue中的事件修饰符：
+        1. prevent: 阻止默认事件（常用）
+        2. stop: 阻止事件冒泡（常用）
+        3. once: 事件只触发一次（常用）
+        4. capture: 使用事件的捕获模式
+        5. self: 只有event、target是当前操作的元素是才触发事件
+        6. passive: 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+
+
+    <div id = "container">
+        <h3>欢迎学习{{name}}</h3>
+        <!-- <a href="https://www.bilibili.com/" @click="info">点我获取</a> -->
+
+        <!-- 阻止链接跳转 -->
+        <a href="https://www.bilibili.com/" @click.prevent="info">点我获取</a>
+        
+        <!-- 阻止事件冒泡（常用） -->
+        <div class = "demo" @click = "info">
+            <!-- <button @click.stop = "info">点我</button> -->
+
+            <!-- 修饰符可以连续写 -->
+            <a href="https://www.bilibili.com/" @click.stop.prevent = "info">你点我啊！修饰符可以连着写</a>
+        </div>
+
+        <!-- 事件只触发一次 -->
+        <button @click.once = "info">点我提示</button>
+
+        <!-- 使用事件的捕获模式   捕获是从由外到内，冒泡是由内往外-->
+        <div class = "box01" @click.capture = "infoMsg(1)">
+            div01
+            <div class = "box02" @click = "infoMsg(2)">div02</div>
+        </div>
+
+        <!-- 只有event、target是当前操作的元素是才触发事件 -->
+        <div class = "demo" @click.self = "info01">
+            <button @click = "info01">点我</button>
+        </div>
+
+        <!-- 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+        <!-- scroll主要对滚动条进行操作控制， wheel主要是对鼠标滚动齿轮进行操作控制的 -->
+        <ul @wheel.passive = "info02">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+    </div>
+
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            data: {
+                name: "Vue"
+            },
+
+            methods: {
+                info(arg){
+                    // arg.preventDefault()                    // 阻止链接跳转
+                    // arg.stopPropagation();                  // 阻止冒泡
+                    alert("Hello")
+                },
+
+                infoMsg(arg){
+                    console.log(arg)
+                },
+
+                info01(e){
+                    alert("click me")
+                    // console.log(e.target)
+                },
+
+                info02(){
+                    for(let i = 0; i < 100000; i++){
+                        console.log("...")
+                    };
+                    console.log("累坏")
+                }
+
+            }
+
+        })
+
+        vm.$mount("#container")
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>自定义指令</title>
+
+        <script src = "../lib/vue.js"></script>
+    </head>
+    <body>
+
+        <!-- 
+            需求一： 定义一个 v-big 指令，和 v-text 功能类似，但会把绑定的数值放大10倍
+
+            自定义指令总结：
+                一、定义语法：
+                    (1).局部指令：
+                        new Vue({                                                                new Vue({           
+                            directives: {指令名：配置对象}              或                            directives{指令名: 回调函数 }   
+                        })                                                                       })
+
+                    (2) 全局指令：
+                            Vue.directive(指令名, 配置对象)             或                        Vue.directive(指令名, 回调函数)
+
+                二、配置对象中常用的3个回调：
+                    (1) bind: 指令与元素成功绑定时调用
+                    (2) inserted: 指令所在元素被插入页面时调用
+                    (3) update: 指令所在模版结构被重新解析时调用
+
+                三、备注：
+                    1. 指令定义时不加 v-, 但使用时要加 v-
+                    2. 指令名如果是多个单词，要使用kebab-case命名方式，不要用cameCase命名
+         -->
+        
+        <div id = "demo">
+
+            <h2>{{name}}</h2>
+
+            <h2> 当前n值：<span v-text = "n"> </span> </h2>
+            <h2> 放大10倍以后的n值： <span v-big-number = 'n'></span> </h2>
+            <!-- <h2> 放大10倍后n值： <span v-big = "n"></span> </h2> -->
+
+            <button @click = "n++"> 点我n+1 </button>
+        </div>
+
+    </body>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                name: "Vue",
+                n: 1
+            },
+            directives:{
+                // big: function(){
+                // }
+
+                // big(a, b){
+                //     // console.log(a, b)
+                //     // console.dir(a)
+                //     console.log(a instanceof HTMLElement)
+                // }
+
+
+                'big-number'(element, binding){
+                    element.innerText = binding.value * 10
+                }    
+
+                // big函数何时会被调用？ 1.指令与元素成功绑定时(一上来);   2. 指令所在的模版被重新解析时     
+                // big(element, binding){
+                //     console.log("big....")
+                //     element.innerText = binding.value * 10
+
+                // }
+            }
+
+        })
+    </script>
+</html>

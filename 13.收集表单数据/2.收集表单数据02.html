@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收集表单数据02</title>
+
+    <script src = "../lib/vue.js"></script>
+</head>
+<body>
+
+    <div id = "demo">
+        <form @submit.prevent = "submit">
+            <label for = "acc">账号</label>
+            <input type = "text" id = "acc" v-model = "info.account">                                        <br><br>
+
+            <label for = "pwd">密码</label>
+            <input type="password" id = "pwd" v-model = "info.password">                                     <br><br>
+
+            性别：
+            男<input type = "radio" name = "sex" value = "male" v-model = "info.sex" checked>
+            女<input type = "radio" name = "sex" value = "female" v-model = "info.sex">                       <br><br>
+
+            爱好：
+            足球<input type="checkbox" value = "football" v-model = "info.hobby" checked>
+            篮球<input type="checkbox" value = "basketball" v-model = "info.hobby" checked>
+            唱歌<input type="checkbox" value = "sing" v-model = "info.hobby">
+            跳舞<input type="checkbox" value="dance" v-model = "info.hobby">                                   <br><br>
+
+            地区：
+            <select v-model = "info.area">
+                <option value = "">请选择地点</option>
+                <option value = "shanghai">上海</option>
+                <option value = "beijing">北京</option>
+                <option value = "chengdu">成都</option>
+                <option value = "chongqing">重庆</option>
+            </select>                                                                                         <br><br>
+
+            其他信息：<br>
+            <textarea v-model = "info.others" name = "othersInfo"></textarea>                                       <br><br>
+
+            <input type="checkbox" value = "agreement" v-model = "info.agree">阅读并接受&nbsp;<a href = "https://juejin.cn/post/6995443075501801480/">《用户协议》</a>             <br><br>
+
+            <button>提交</button>
+
+        </form>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#demo",
+            data: {
+                info: {
+                    account: "",
+                    password: "",
+                    sex: 'male',
+                    hobby: [],
+                    area: 'chengdu',
+                    others: '',
+                    agree: ''
+                }
+            },
+            methods: {
+                submit(){
+                    console.log(JSON.stringify(this.info))
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>
